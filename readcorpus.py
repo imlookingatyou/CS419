@@ -1,8 +1,22 @@
+#
+# Week 7 - Lab 2 - The Great Host/Lexical URL Reputation Bake-off
+# CS419 - Defense Against the Dark Arts
+#
+# Michael Depuy
+# Jonathan McNeil 
+# Marie Caswell
+#
+
 #!/usr/bin/python
 
 import json, sys, getopt, os
 
-REC = {}
+REC = {} #empty dictionary structure to store url:score
+
+# Note: I changed the REC{} format to store the URL 
+# instead of the IP address since lab2.pdf says 
+# that our final output file needs to be in the format 
+# <url string>, <malicious bit> (where 1 =malicious, and 0=safe)
 
 def usage():
   print("Usage: %s --file=[filename]" % sys.argv[0])
@@ -27,12 +41,12 @@ def main(argv):
   urldata = json.load(corpus, encoding="latin1")
 
   for record in urldata:
-    rec_ip = record["ips"].get("ip")
+    rec_url = record['url']
     score = 0
     
     # Do something with the URL record data...
     
-    REC[rec_ip] = 0
+    REC[rec_url] = 0
     
     if record["domain_age_days"] < 188:
       score = score + 1
@@ -42,14 +56,14 @@ def main(argv):
       score = score + 1
     if record["tld"] not in ("com","net","org","edu"):
       score = score + 1
-    if record["alexa_rank"] > 1000000 or record["alexa_rank"] == NULL:
+    if record["alexa_rank"] > 1000000 or record["alexa_rank"] == None:
       score = score + 1
     if record["num_domain_tokens"] > 3:
       score = score + 1
 
-    REC[rec_ip] = score
+    REC[rec_url] = score
 
-  for r,s in REC:
+  for r,s in REC.iteritems():
     print(r,s)
 
   corpus.close()
