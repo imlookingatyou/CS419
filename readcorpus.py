@@ -29,8 +29,11 @@ def main(argv):
   for record in urldata:
     rec_ip = record["ips"].get("ip")
     score = 0
+    
     # Do something with the URL record data...
+    
     REC[rec_ip] = 0
+    
     if record["domain_age_days"] < 188:
       score = score + 1
     if record["host_len"] > 10:
