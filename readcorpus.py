@@ -63,10 +63,18 @@ def main(argv):
 
     REC[rec_url] = score
 
+
+  output = open('output.txt','w') #delete any old data from the output file
+  output.truncate(0)
+  output.close()
+
   for r,s in REC.iteritems():
-    print(r,s)
+    with open('output.txt', 'a') as output:     #open output file in append mode
+      print(r,s)
+      output.write('%s, %s\n' % (r, str(s))) #write new data to file
 
   corpus.close()
+  output.close()
 
 if __name__ == "__main__":
   main(sys.argv[1:])
