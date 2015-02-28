@@ -12,6 +12,7 @@
 import json, sys, getopt, os
 
 REC = {} #empty dictionary structure to store url:score
+COUNT = {} #added count to see point spread among URLs
 
 # Note: I changed the REC{} format to store the URL 
 # instead of the IP address since lab2.pdf says 
@@ -50,8 +51,11 @@ def main(argv):
     # Do something with the URL record data...
     
     REC[rec_url] = 0
+<<<<<<< HEAD
     
 
+=======
+>>>>>>> marie_test_branch
 
     if record["domain_age_days"] < 188:
       score = score + 1
@@ -69,9 +73,39 @@ def main(argv):
     if record["num_domain_tokens"] > 3:
       score = score + 1
     # It stands to reason that links with an executable file have a beter chance of being malicious.  
+<<<<<<< HEAD
     if record['file_extension'] in ('exe'):
       score = score + 1
 
+=======
+
+    if record["file_extension"] == ("exe"):
+      score = score + 5
+
+    if "mxhosts" in record:
+      if record["mxhosts"] != None:
+        i = record["mxhosts"]
+        if i[0] == None:
+          print "no mx host"
+          score = score + 1
+        else:
+          print "mx host exists"
+          mx_loc = i[0]
+
+    if  record["ips"] != None:
+      i = record["ips"]
+      if i[0] == None:
+        print "None\n"
+        score = score + 1
+      else:
+        print "exists"
+        dom_loc = i[0]
+
+    if mx_loc == dom_loc:
+      score = score - 1
+    else:
+      score = score + 1
+>>>>>>> marie_test_branch
 
     REC[rec_url] = score
 
@@ -79,10 +113,21 @@ def main(argv):
   output.truncate(0)
   output.close()
 
+<<<<<<< HEAD
   for r,s in REC.iteritems():
     with open('output.txt', 'a') as output:     #open output file in append mode
       print(r,s)
       output.write('%s, %s\n' % (r, str(s))) #write new data to file
+=======
+  for r,s in REC.iteritems():
+    with open('output.txt', 'a') as output:     #open output file in append mode
+      print(r,s)
+      output.write('%s, %s\n' % (r, str(s))) #write new data to file
+
+  for r,s in REC.iteritems():
+    COUNT[s] = COUNT.get(s,0)+1
+  print COUNT
+>>>>>>> marie_test_branch
 
   corpus.close()
   output.close()
