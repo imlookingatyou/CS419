@@ -46,16 +46,10 @@ def main(argv):
   for record in urldata:
     rec_url = record['url']
     score = 0
-
-    
+  
     # Do something with the URL record data...
     
     REC[rec_url] = 0
-<<<<<<< HEAD
-    
-
-=======
->>>>>>> marie_test_branch
 
     if record["domain_age_days"] < 188:
       score = score + 1
@@ -73,10 +67,7 @@ def main(argv):
     if record["num_domain_tokens"] > 3:
       score = score + 1
     # It stands to reason that links with an executable file have a beter chance of being malicious.  
-<<<<<<< HEAD
-<<<<<<< HEAD
-    if record['file_extension'] in ('exe'):
-=======
+
     if record['file_extension'] != None:
     	if record['file_extension'] in ('exe'):
     		score = score + 1
@@ -104,10 +95,7 @@ def main(argv):
     if mx_loc == dom_loc:
       score = score - 1
     else:
->>>>>>> origin/master
       score = score + 1
-
-=======
 
     if record["file_extension"] == ("exe"):
       score = score + 5
@@ -135,7 +123,6 @@ def main(argv):
       score = score - 1
     else:
       score = score + 1
->>>>>>> marie_test_branch
 
     REC[rec_url] = score
 
@@ -145,7 +132,6 @@ def main(argv):
   badcount = 0
   goodcount = 0
 
-<<<<<<< HEAD
   for r,s in REC.iteritems():
     if s > 4:
      s = 1
@@ -156,7 +142,7 @@ def main(argv):
     with open('output.txt', 'a') as output:     #open output file in append mode
       print(r,s)
       output.write('%s, %s\n' % (r, str(s))) #write new data to file
-=======
+
   for r,s in REC.iteritems():
     with open('output.txt', 'a') as output:     #open output file in append mode
       print(r,s)
@@ -164,8 +150,7 @@ def main(argv):
 
   for r,s in REC.iteritems():
     COUNT[s] = COUNT.get(s,0)+1
-  print COUNT
->>>>>>> marie_test_branch
+  print "POINT SPREAD: " + str(COUNT)
 
   corpus.close()
   output.close()
