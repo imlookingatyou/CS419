@@ -74,7 +74,37 @@ def main(argv):
       score = score + 1
     # It stands to reason that links with an executable file have a beter chance of being malicious.  
 <<<<<<< HEAD
+<<<<<<< HEAD
     if record['file_extension'] in ('exe'):
+=======
+    if record['file_extension'] != None:
+    	if record['file_extension'] in ('exe'):
+    		score = score + 1
+
+
+    if "mxhosts" in record:
+      if record["mxhosts"] != None:
+        i = record["mxhosts"]
+        if i[0] == None:
+          print "no mx host"
+          score = score + 1
+        else:
+          print "mx host exists"
+          mx_loc = i[0]
+
+    if  record["ips"] != None:
+      i = record["ips"]
+      if i[0] == None:
+        print "None\n"
+        score = score + 1
+      else:
+        print "exists"
+        dom_loc = i[0]
+
+    if mx_loc == dom_loc:
+      score = score - 1
+    else:
+>>>>>>> origin/master
       score = score + 1
 
 =======
@@ -112,9 +142,17 @@ def main(argv):
   output = open('output.txt','w') #delete any old data from the output file
   output.truncate(0)
   output.close()
+  badcount = 0
+  goodcount = 0
 
 <<<<<<< HEAD
   for r,s in REC.iteritems():
+    if s > 4:
+     s = 1
+     badcount += 1
+    else:
+     s = 0
+     goodcount += 1
     with open('output.txt', 'a') as output:     #open output file in append mode
       print(r,s)
       output.write('%s, %s\n' % (r, str(s))) #write new data to file
@@ -131,6 +169,8 @@ def main(argv):
 
   corpus.close()
   output.close()
+
+  print "GOOD: " + str(goodcount) + " " + "BAD: " + str(badcount)
 
 if __name__ == "__main__":
   main(sys.argv[1:])
