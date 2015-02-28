@@ -68,9 +68,9 @@ def main(argv):
     if record["num_domain_tokens"] > 3:
       score = score + 1
     # It stands to reason that links with an executable file have a beter chance of being malicious.  
-
-    if record["file_extension"] == ("exe"):
-      score = score + 5
+    if record['file_extension'] != None:
+      if record['file_extension'] in ('exe'):
+        score = score + 1
 
     if "mxhosts" in record:
       if record["mxhosts"] != None:
@@ -94,25 +94,35 @@ def main(argv):
     if mx_loc == dom_loc:
       score = score - 1
     else:
-      score = score + 1
+     score = score + 1
 
     REC[rec_url] = score
 
   output = open('output.txt','w') #delete any old data from the output file
   output.truncate(0)
   output.close()
+  badcount = 0
+  goodcount = 0
 
   for r,s in REC.iteritems():
+    if s > 4:
+     s = 1
+     badcount += 1
+    else:
+     s = 0
+     goodcount += 1
     with open('output.txt', 'a') as output:     #open output file in append mode
       print(r,s)
       output.write('%s, %s\n' % (r, str(s))) #write new data to file
 
   for r,s in REC.iteritems():
     COUNT[s] = COUNT.get(s,0)+1
-  print COUNT
+  print "POINT SPREAD: " + str(COUNT)
 
   corpus.close()
   output.close()
+
+  print "GOOD: " + str(goodcount) + " " + "BAD: " + str(badcount)
 
 if __name__ == "__main__":
   main(sys.argv[1:])
