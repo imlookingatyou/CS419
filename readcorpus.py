@@ -144,11 +144,6 @@ def main(argv):
       output.write('%s, %s\n' % (r, str(s))) #write new data to file
 
   for r,s in REC.iteritems():
-    with open('output.txt', 'a') as output:     #open output file in append mode
-      print(r,s)
-      output.write('%s, %s\n' % (r, str(s))) #write new data to file
-
-  for r,s in REC.iteritems():
     COUNT[s] = COUNT.get(s,0)+1
   print "POINT SPREAD: " + str(COUNT)
 
