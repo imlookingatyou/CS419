@@ -71,6 +71,29 @@ def main(argv):
     # It stands to reason that links with an executable file have a beter chance of being malicious.  
     if record['file_extension'] in ('exe'):
       score = score + 1
+	if "mxhosts" in record:
+      if record["mxhosts"] != None:
+        i = record["mxhosts"]
+        if i[0] == None:
+          print "no mx host"
+          score = score + 1
+        else:
+          print "mx host exists"
+          mx_loc = i[0]
+
+    if  record["ips"] != None:
+      i = record["ips"]
+      if i[0] == None:
+        print "None\n"
+        score = score + 1
+      else:
+        print "exists"
+        dom_loc = i[0]
+
+    if mx_loc == dom_loc:
+      score = score - 1
+    else:
+      score = score + 1
 
 
     REC[rec_url] = score
